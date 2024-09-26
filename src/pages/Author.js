@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from '../components/Modal';
 import { Link } from 'react-router-dom';
 
-const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080/api/v1';
+const apiUrl = process.env.REACT_APP_API_URL ;
 
 const Authors = () => {
   const [modalOpen, setModalOpen] = useState(false);
