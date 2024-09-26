@@ -43,7 +43,7 @@ const Book = () => {
         setAuthors(data);
       })
       .catch(error => console.error('Error fetching authors:', error));
-  }, []);
+  }, [authors]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
