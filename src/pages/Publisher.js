@@ -17,7 +17,7 @@ const Publishers = () => {
   const handleCloseModal = () => setModalOpen(false);
 
   useEffect(() => {
-    fetch(`${apiUrl}/publishers`)
+    fetch(`${apiUrl}/api/v1/publishers`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok ' + response.statusText);
@@ -30,7 +30,7 @@ const Publishers = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const url = editData ? `${apiUrl}/publishers/${editData.id}` : `${apiUrl}/publishers`;
+    const url = editData ? `${apiUrl}/api/v1/publishers/${editData.id}` : `${apiUrl}/api/v1/publishers`;
     const method = editData ? 'PUT' : 'POST';
 
     fetch(url, {
@@ -68,7 +68,7 @@ const Publishers = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(`${apiUrl}/publishers/${id}`, { method: 'DELETE' })
+    fetch(`${apiUrl}/api/v1/publishers/${id}`, { method: 'DELETE' })
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

@@ -23,8 +23,8 @@ const Purchase = () => {
   const handleCloseModal = () => setModalOpen(false);
 
   useEffect(() => {
-    // Kitapları yükle
-    fetch(`${apiUrl}/books`)
+    
+    fetch(`${apiUrl}/api/v1/books`)
       .then((response) => {
         if (!response.ok) throw new Error('Network response was not ok');
         return response.json();
@@ -35,8 +35,7 @@ const Purchase = () => {
       })
       .catch((error) => console.error('Error fetching books:', error));
 
-    // Ödünç alma kayıtlarını yükle
-    fetch(`${apiUrl}/borrows`)
+    fetch(`${apiUrl}/api/v1/borrows`)
       .then((response) => {
         if (!response.ok) throw new Error('Network response was not ok');
         return response.json();
@@ -50,7 +49,7 @@ const Purchase = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const url = editData ? `${apiUrl}/borrows/${editData.id}` : `${apiUrl}/borrows`;
+    const url = editData ? `${apiUrl}/api/v1/borrows/${editData.id}` : `${apiUrl}/api/v1/borrows`;
     const method = editData ? 'PUT' : 'POST';
 
     fetch(url, {
@@ -62,9 +61,9 @@ const Purchase = () => {
         borrowingDate: formData.borrowingDate,
         bookForBorrowingRequest: {
           id: formData.bookId,
-          name: '', // 
-          publicationYear: 0, 
-          stock: 0 
+          name: '', // İhtiyaç varsa buraya kitap adı eklenebilir
+          publicationYear: 0, // Eğer gerekli değilse bu alanı kaldırabilirsiniz
+          stock: 0 // Eğer gerekli değilse bu alanı kaldırabilirsiniz
         }
       }),
     })
@@ -102,7 +101,7 @@ const Purchase = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(`${apiUrl}/borrows/${id}`, { method: 'DELETE' })
+    fetch(`${apiUrl}/api/v1/borrows/${id}`, { method: 'DELETE' })
       .then((response) => {
         if (!response.ok) throw new Error('Network response was not ok');
         setBorrowings(borrowings.filter((b) => b.id !== id));
