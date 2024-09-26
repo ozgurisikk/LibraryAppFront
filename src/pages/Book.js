@@ -17,7 +17,17 @@ const Book = () => {
   const handleCloseModal = () => setModalOpen(false);
 
   useEffect(() => {
-    
+    fetch(`${apiUrl}/api/v1/authors`)
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      })
+      .then(data => {
+        console.log('Fetched authors:', data);
+        setAuthors(data);
+      })
+      .catch(error => console.error('Error fetching authors:', error));
+  
     fetch(`${apiUrl}/api/v1/books`)
       .then(response => {
         if (!response.ok) throw new Error('Network response was not ok');
@@ -25,25 +35,10 @@ const Book = () => {
       })
       .then(data => {
         console.log('Fetched books:', data);
-        setBooks(data.map(book => ({
-          ...book,
-          author: authors.find(author => author.id === book.authorId)
-        })));
+        setBooks(data);
       })
       .catch(error => console.error('Error fetching books:', error));
-
-    
-    fetch(`${apiUrl}/api/v1/authors`)
-      .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-      })
-      .then(data => {
-        console.log('Fetched authors:', data); 
-        setAuthors(data);
-      })
-      .catch(error => console.error('Error fetching authors:', error));
-  }, [authors]);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -88,7 +83,7 @@ const Book = () => {
       title: book.name, 
       publicationYear: book.publicationYear, 
       stock: book.stock, 
-      authorId: book.author.id 
+      authorId: book.author ? book.author.id : '' 
     });
     setEditData(book);
   };
