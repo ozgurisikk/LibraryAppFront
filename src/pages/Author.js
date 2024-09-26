@@ -11,12 +11,11 @@ const Authors = () => {
   const [modalMessage, setModalMessage] = useState('');
   const [editData, setEditData] = useState(null);
   const [authors, setAuthors] = useState([]);
-
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
 
   useEffect(() => {
-    fetch(`${apiUrl}/authors`)
+    fetch(`${apiUrl}/api/v1/authors`)
       .then(response => {
         if (!response.ok) throw new Error('Network response was not ok');
         return response.json();
@@ -27,7 +26,7 @@ const Authors = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const url = editData ? `${apiUrl}/authors/${editData.id}` : `${apiUrl}/authors`;
+    const url = editData ? `${apiUrl}/api/v1/authors/${editData.id}` : `${apiUrl}/api/v1/authors`;
     const method = editData ? 'PUT' : 'POST';
 
     fetch(url, {
@@ -64,7 +63,7 @@ const Authors = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(`${apiUrl}/authors/${id}`, { method: 'DELETE' })
+    fetch(`${apiUrl}/api/v1/authors/${id}`, { method: 'DELETE' })
       .then(response => {
         if (!response.ok) throw new Error('Network response was not ok');
         setAuthors(authors.filter(a => a.id !== id));
